@@ -8,7 +8,7 @@ export interface Strategies {
 }
 
 export interface Strategy {
-  _attributes?: StrategyAttributes;
+  _attributes: StrategyAttributes;
   Regions?: Regions;
   Parameter?: ParameterElement[] | ParameterElement;
   StrategyLayout?: StrategyLayout;
@@ -30,13 +30,16 @@ export interface EnumPairAttributes {
 }
 
 export interface ParameterAttributes {
-  type?: string;
+  type: string;
   name?: string;
   fixTag?: string;
   use?: Use;
   mutableOnCxlRpl?: string;
   revertOnCxlRpl?: string;
-  precision?: string;
+  wireValue?: string;
+  precision: string;
+  minValue: string;
+  maxValue: string;
 }
 
 export interface Regions {
@@ -108,10 +111,27 @@ export interface ListItemAttributes {
   uiRep?: string;
 }
 
+export type ControlAttrType =
+  | 'CheckBoxList_t'
+  | 'CheckBox_t'
+  | 'Clock_t'
+  | 'DropDownList_t'
+  | 'EditableDropDownList_t'
+  | 'DoubleSpinner_t'
+  | 'HiddenField_t'
+  | 'Label_t'
+  | 'MultiSelectList_t'
+  | 'RadioButtonList_t'
+  | 'RadioButton_t'
+  | 'SingleSelectList_t'
+  | 'SingleSpinner_t'
+  | 'Slider_t'
+  | 'TextField_t';
+
 export interface ControlAttributes {
-  type?: string;
+  type: ControlAttrType;
   ID?: string;
-  parameterRef?: string;
+  parameterRef: string;
   tooltip?: string;
   label?: string;
   initValue?: string;
@@ -132,9 +152,9 @@ export interface StrategyPanelAttributes {
 }
 
 export interface StrategyAttributes {
-  name?: string;
+  name: string;
   uiRep?: string;
-  wireValue?: string;
+  wireValue: string;
   providerID?: string;
   version?: string;
   fixMsgType?: string;

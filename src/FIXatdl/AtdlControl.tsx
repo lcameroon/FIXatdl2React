@@ -18,9 +18,29 @@ import {
   TextField_t,
 } from './components';
 
-import { Control } from './model/atdl';
+import { ControlAttributes, ParameterElement } from './model/atdl';
 
-const ControlType: { [key: string]: React.ComponentType<{ control: Control }> } = {
+interface AntdListField {
+  key: number;
+  name: number;
+  isListField?: boolean;
+  fieldKey?: number;
+}
+export interface ControlProps {
+  id?: string;
+  value?: any;
+  ref?: any;
+  onChange?: (value: any) => {};
+  control: ControlAttributes;
+  field?: AntdListField;
+  params?: ParameterElement['_attributes'];
+}
+
+interface ControlType {
+  [key: string]: React.ComponentType<ControlProps>;
+}
+
+const controlType: ControlType = {
   CheckBoxList_t,
   CheckBox_t,
   Clock_t,
@@ -38,13 +58,17 @@ const ControlType: { [key: string]: React.ComponentType<{ control: Control }> } 
   TextField_t,
 };
 
-interface Props {
-  type: string;
-  control: Control;
-}
+export const AtdlControl: React.FC<ControlProps> = React.forwardRef((props, ref) => {
+  const Component = controlType[props.control.type];
 
-export const AtdlControl: React.FC<Props> = ({ type, control }) => {
-  const Component = ControlType[type];
-
-  return <Component control={control} />;
-};
+  return (
+    <Component
+      id={props.id}
+      value={props.value}
+      onChange={props.onChange}
+      field={props.field}
+      control={props.control}
+      params={props.params}
+    />
+  );
+});

@@ -13,6 +13,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
     "antd": "^4.4.1",
+    "fixparser": "^2.9.5",
     "lodash": "^4.17.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

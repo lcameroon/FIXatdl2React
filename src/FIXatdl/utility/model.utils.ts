@@ -1,6 +1,6 @@
 import parser from 'xml-js';
 
-import { Atdl } from '../model/atdl.d';
+import { Atdl } from '../model/atdl';
 
 // To parse this data:
 //
