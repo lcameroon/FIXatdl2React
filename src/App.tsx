@@ -10,6 +10,7 @@ function App() {
   const setXml2Json = (xml: string) => {
     let result = '';
     try {
+      xml = xml.replace(/(xsi:|lay:|val:)/g, '');
       result = parser.xml2json(xml, { compact: true, spaces: 2 });
     } catch {
       message.error('Error parsing FIXatdl XML');

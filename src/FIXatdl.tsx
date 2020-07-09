@@ -79,7 +79,6 @@ const Widget = ({ atdl }: any) => {
   const { Strategies } = atdl;
   const { Strategy } = Strategies;
   const { Parameter } = Strategy;
-  const StrategyPanel = Strategy['lay:StrategyLayout']['lay:StrategyPanel'];
   return (
     <Card
       style={{
@@ -88,29 +87,31 @@ const Widget = ({ atdl }: any) => {
       bordered
       title="Order Widget">
       <Form {...layout} form={form} name="control-hooks">
-        {buildStrategy(Strategy)}
-        {buildControlPanel(StrategyPanel, Parameter)}
+        {buildStrategy(Strategy, Parameter)}
       </Form>
     </Card>
   );
 };
 
-const buildStrategy = (Strategy: any | any[]) => {
+const buildStrategy = (Strategy: any | any[], Parameter: any) => {
   const { Option } = Select;
-  const rederStrategyForm = ({ _attributes }: any) => (
-    <Form.Item name="Strategy" label="Strategy" rules={[{ required: true }]}>
-      <Select
-        defaultValue={_attributes.wireValue}
-        placeholder="Select a strategy"
-        allowClear>
-        <Option value={_attributes.wireValue}>
-          {_attributes.name}
-          <small style={{ paddingLeft: 16 }}>
-            (value: {_attributes.wireValue} | fixType: {_attributes.fixMsgType})
-          </small>
-        </Option>
-      </Select>
-    </Form.Item>
+  const rederStrategyForm = ({ _attributes, StrategyLayout: { StrategyPanel } }: any) => (
+    <>
+      <Form.Item name="Strategy" label="Strategy" rules={[{ required: true }]}>
+        <Select
+          defaultValue={_attributes.wireValue}
+          placeholder="Select a strategy"
+          allowClear>
+          <Option value={_attributes.wireValue}>
+            {_attributes.name}
+            <small style={{ paddingLeft: 16 }}>
+              (value: {_attributes.wireValue} | fixType: {_attributes.fixMsgType})
+            </small>
+          </Option>
+        </Select>
+      </Form.Item>
+      {buildControlPanel(StrategyPanel, Parameter)}
+    </>
   );
   return isArray(Strategy)
     ? Strategy.map((strategy) => rederStrategyForm(strategy))
@@ -118,7 +119,7 @@ const buildStrategy = (Strategy: any | any[]) => {
 };
 
 const buildControlPanel = (StrategyPanel: any, Parameter: any) => {
-  const controls: any[] = StrategyPanel['lay:Control'] || [];
+  const controls: any[] = StrategyPanel.Control || [];
 
   const getParams = (parameterRef: string) => {
     const result = find(Parameter, ['_attributes.name', parameterRef]);
