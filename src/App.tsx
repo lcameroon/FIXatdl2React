@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import parser from 'xml-js';
 import { Row, Col, Divider, Layout, Button, message } from 'antd';
 
 import { FIXatdlTexarea, FIXatdl2Json, FIXatdlBuilder, sampleFIXatdl } from './FIXatdl';
+import { Convert } from './FIXatdl/utility/model.utils';
 
 function App() {
   const [json, setJson] = useState('');
@@ -10,8 +10,7 @@ function App() {
   const setXml2Json = (xml: string) => {
     let result = '';
     try {
-      xml = xml.replace(/(xsi:|lay:|val:)/g, '');
-      result = parser.xml2json(xml, { compact: true, spaces: 2 });
+      result = Convert.toJson(xml);
     } catch {
       message.error('Error parsing FIXatdl XML');
     }

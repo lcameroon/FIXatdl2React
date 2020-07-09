@@ -27,7 +27,7 @@ export const FIXatdl2Json = ({ data = '' }) => {
   );
 };
 
-export const sampleFIXatdl = `<Strategies>
+export const sampleFIXatdl = `<Strategies xmlns:lay="http://www.fixprotocol.org/FIXatdl-1-1/Layout">
   <Strategy name="Tazer" uiRep="Tazer" wireValue="3000" fixMsgType="D">
   <Parameter name="EffectiveTime" xsi:type="UTCTimestamp_t" fixTag="168"/>
   <Parameter name="VolTarget" xsi:type="Percentage_t" fixTag="7641" minValue="0.01" maxValue="0.75"/>
@@ -128,13 +128,13 @@ const buildControlPanel = (StrategyPanel: any, Parameter: any) => {
 
   return controls.map(({ _attributes: attr }) => (
     <Form.Item key={attr.parameterRef} label={attr.label} rules={[{ required: true }]}>
-      {attr.ID === 'StartTimeClock' ? (
+      {attr.type === 'Clock_t' ? (
         <Space>
-          <DatePicker defaultValue={moment()} />
+          <DatePicker format="DD/MM/YYYY" defaultValue={moment()} />
           <TimePicker use12Hours format="h:mm:ss A" defaultValue={moment()} />
         </Space>
       ) : null}
-      {attr.ID === 'VolSpinner' ? (
+      {attr.type === 'SingleSpinner_t' ? (
         <InputNumber
           defaultValue={100}
           min={getParams(attr.parameterRef)?.minValue.replace('.', '') || 1}
