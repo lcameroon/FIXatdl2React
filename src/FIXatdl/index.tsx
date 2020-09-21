@@ -138,7 +138,7 @@ const ControlsFieldList = ({
 }: any) => (
   <Fragment>
     {fields.map((field: any, idx: number) => {
-      const { _attributes, _params } = initialValues[currentStrategy].panels[
+      const { _attributes, _params, _listItems } = initialValues[currentStrategy].panels[
         currentPanel
       ].controls[idx];
       return (
@@ -152,7 +152,12 @@ const ControlsFieldList = ({
               message: `${_attributes.parameterRef} is required`,
             },
           ]}>
-          <AtdlControl field={field} control={_attributes} params={_params} />
+          <AtdlControl
+            field={field}
+            control={_attributes}
+            params={_params}
+            listItems={_listItems}
+          />
         </Form.Item>
       );
     })}
@@ -176,15 +181,16 @@ export const buildInitialValues = (Strategy: any) => {
     initValues.push({
       ..._attributes,
       panels: strategyPanel.map(({ Control }) => {
-        console.log('Control', Control);
         return {
-          controls: Control.map(({ _attributes }: any) => {
+          controls: Control.map(({ _attributes, ListItem = [] }: any) => {
             const _params = getParams(_attributes.parameterRef, Parameter);
+            const _listItems = ListItem.map(({ _attributes }: any) => _attributes);
             const value: any = _params?.type === 'Percentage_t' ? 1 : undefined;
             return {
               [_attributes.parameterRef]: value,
               _attributes,
               _params,
+              _listItems,
             };
           }),
         };

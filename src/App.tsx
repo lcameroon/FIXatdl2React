@@ -35,19 +35,22 @@ const App = () => {
         <h3 style={{ color: '#FFF' }}>FIXatdl 2 React Widget</h3>
       </Layout.Header>
       <Layout.Content
-        style={{ height: 'calc(100vh - 64px)', padding: '24px 50px', overflow: 'auto' }}>
-        <Row gutter={24}>
-          <Col span={12}>
+        style={{
+          height: 'calc(100vh - 64px)',
+          padding: '24px 50px',
+          overflow: 'auto',
+        }}>
+        <Row gutter={24} style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
+          <Col span={14}>
             <FIXatdlTexarea onChange={onChange} />
           </Col>
-          <Col span={12}>
-            <FIXatdl2Json data={json} />
+          <Col span={10}>
             <Button
               onClick={buildWidget}
               type="primary"
               size="large"
               block
-              style={{ marginBottom: 16 }}>
+              style={{ marginBottom: 16, marginTop: 22 }}>
               Build Widget
             </Button>
             <FIXatdl atdlJson={json} />

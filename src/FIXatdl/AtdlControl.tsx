@@ -34,6 +34,7 @@ export interface ControlProps {
   control: ControlAttributes;
   field?: AntdListField;
   params?: ParameterElement['_attributes'];
+  listItems?: any[];
 }
 
 interface ControlType {
@@ -69,6 +70,7 @@ export const AtdlControl: React.FC<ControlProps> = React.forwardRef((props, ref)
       field={props.field}
       control={props.control}
       params={props.params}
+      listItems={props.listItems}
     />
   );
 });
